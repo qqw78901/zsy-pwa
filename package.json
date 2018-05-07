@@ -28,7 +28,7 @@
         "normalize.css": "^7.0.0",
         "qs": "^6.5.1",
         "stoppable": "^1.0.4",
-        "vuetify": "^0.17.5"
+        "vuetify": "^1.0.17"
     },
     "devDependencies": {
         "express": "^4.16.2",

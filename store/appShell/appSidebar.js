@@ -14,7 +14,7 @@ export const state = () => {
             imageLeft: '',
             altLeft: '',
             iconLeft: 'home',
-            text: 'Home',
+            text: '首页',
             imageRight: '',
             altRight: '',
             iconRight: ''
@@ -30,13 +30,18 @@ export const state = () => {
         blocks: [
             {
                 // 子列表1
-                sublistTitle: 'Sublist1',
+                sublistTitle: '菜单',
                 list: [
                     {
                         text: '练习',
-                        icon: 'sentiment_satisfied',
+                        icon: 'book',
                         route: '/lianxi'
                     },
+                    {
+                        text: '成绩分析',
+                        icon: 'insert_chart',
+                        route: '/chengji'
+                    }
                 ]
             }
         ]

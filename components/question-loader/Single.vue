@@ -1,23 +1,23 @@
 <template>
-    <section>
-        <h3>
-            {{question.level_name}}-单选题
-        </h3>
-        <p>
-            {{order}}.{{question.text}}
-        </p>
-        <v-radio-group v-model="answer">
-            <v-radio v-for="item in question.anss" :label="`${item.orderby}.${item.text}`" :key="item.id" :value="item.orderby" />
-        </v-radio-group>
-    </section>
-
+  <section class="my-2 px-2">
+    <v-card class="card">
+      <v-card-title class="subheading card-title light-blue">
+       [单选题] {{this.order}}.{{question.text}}
+      </v-card-title>
+      <v-divider></v-divider>
+      <v-radio-group v-model="answer" column class="px-4">
+        <v-radio :label="`${item.orderby}.${item.text}`" :value="item.orderby" v-for="(item,index) in question.anss" :key="index" class="my-2">
+        </v-radio>
+      </v-radio-group>
+    </v-card>
+  </section>
 </template>
 <script>
 import axios from "axios";
 import api from "../../core/api";
 import qs from "qs";
 export default {
-  name: "single-show",
+  name: "single",
   props: {
     userAnswer: {
       type: String,
@@ -36,10 +36,6 @@ export default {
     changeFn: {
       type: Function,
       required: false
-    },
-    preview: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -49,11 +45,11 @@ export default {
     };
   },
   watch: {
-    answer(val, oldVal) {
-      if (!this.preview) {
-        this.handleAnswer(val);
-      }
-    }
+    // answer(val, oldVal) {
+    //   if (!this.preview) {
+    //     this.handleAnswer(val);
+    //   }
+    // }
   },
   methods: {
     /*submit*/
@@ -79,12 +75,20 @@ export default {
     }
   },
   mounted() {
-    if (this.userAnswer) {
-      this.answer = this.userAnswer;
-    }
   }
 };
 </script>
-<style>
-
+<style scoped>
+.card-title {
+  color: #f5f5f5;
+  text-align: left;
+}
+.card-text {
+}
+.single {
+  text-align: left;
+}
+.card p {
+  margin-top: 20px;
+}
 </style>

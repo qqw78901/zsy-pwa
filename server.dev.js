@@ -69,7 +69,7 @@ function startDevServer() {
              * server.close() only stop accepting new connections,
              * we need to close existing connections with help of stoppable
              */
-            server = stoppable(app.listen(port, function () {
+            server = stoppable(app.listen(port,'0.0.0.0', function () {
                 console.log('server started at localhost:' + port);
             }));
         })
