@@ -8,7 +8,7 @@
       <v-radio-group v-model="answer" column class="px-4">
         <v-radio :label="`${item.orderby}.${item.text}`" :value="item.orderby" v-for="(item,index) in question.anss" :key="index" class="my-2">
         </v-radio>
-      </v-radio-group>
+      </v-radio-group>  
     </v-card>
   </section>
 </template>
@@ -83,12 +83,11 @@ export default {
   color: #f5f5f5;
   text-align: left;
 }
-.card-text {
-}
 .single {
   text-align: left;
 }
 .card p {
   margin-top: 20px;
 }
+
 </style>
