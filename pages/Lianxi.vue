@@ -1,36 +1,36 @@
 <template>
-    <section>
-        <div class="pt-3 pb-2 mx-2 text-xs-left question-header">
-            <span class="text-xs-right blue--text" v-if="question.ques">第{{currentIndex+1}}/{{question.ques.length}}题</span>
-            <span>{{question.plan_name}} </span>
-            <v-btn small color="teal darken-1" class="submit-paper-btn">交卷</v-btn>
-        </div>
-        <template v-for="(item,index) in question.ques">
-            <!-- question main -->
-            <Single :question="item" :key="index" :order="index+1" v-if="index==currentIndex&&item.type==1"></Single>
-            <Multi :question="item" :key="index" :order="index+1" v-if="index==currentIndex&&item.type==2"></Multi>
-        </template>
-        <v-card class="mx-2" light color="teal" v-if="correctAnswer">
-            <v-card-text class="correct-helper">正确答案：
-                <b>{{standedAnswer}}
-                </b>
-            </v-card-text>
-        </v-card>
-        <v-layout>
-
-            <v-btn color="primary" fixed bottom left fab icon small dark class="btn-center" @click="prevQuestion">
-                <v-icon medium dark>chevron_left</v-icon>
-            </v-btn>
-            <v-btn color="primary" fixed bottom right fab icon small dark class="btn-center" @click="nextQuestion">
-                <v-icon medium dark>chevron_right</v-icon>
-            </v-btn>
-        </v-layout>
-    </section>
+  <section>
+    <div class="pt-3 pb-2 mx-2 text-xs-left question-header">
+      <span class="text-xs-right blue--text" v-if="question.ques">第{{currentIndex+1}}/{{question.ques.length}}题</span>
+      <span>{{question.plan_name}} </span>
+      <v-btn small color="teal darken-1" class="submit-paper-btn">交卷</v-btn>
+    </div>
+    <template v-for="(item,index) in question.ques">
+      <!-- question main -->
+      <Single :question="item" :key="index" :order="index+1" v-if="index==currentIndex&&item.type==1"></Single>
+      <Multi :question="item" :key="index" :order="index+1" v-if="index==currentIndex&&item.type==2"></Multi>
+    </template>
+    <v-card class="mx-2" light color="teal" v-if="!currentQuestionIsRight&&currentAnswer">
+      <v-card-text class="correct-helper">正确答案：
+        <b>{{currentCorrectAnswer}}
+        </b>
+      </v-card-text>
+    </v-card>
+    <v-layout>
+      <v-btn color="primary" fixed bottom left fab icon small dark class="btn-center" @click="prevQuestion">
+        <v-icon medium dark>chevron_left</v-icon>
+      </v-btn>
+      <v-btn color="primary" fixed bottom right fab icon small dark class="btn-center" @click="nextQuestion">
+        <v-icon medium dark>chevron_right</v-icon>
+      </v-btn>
+    </v-layout>
+  </section>
 
 </template>
 <script>
 import Single from "../components/question-loader/Single";
 import Multi from "../components/question-loader/Multi";
+import { mapState, mapMutations, mapGetters } from "vuex";
 export default {
   name: "Lianxi",
   components: {
@@ -39,26 +39,41 @@ export default {
   },
   methods: {
     prevQuestion() {
-      if (this.currentIndex - 1 <= 0) {
+      if (this.currentIndex - 1 < 0) {
         return;
       }
-      this.currentIndex -= 1;
+      this.setCurrentIndex(this.currentIndex - 1);
     },
     nextQuestion() {
       if (this.currentIndex + 1 >= this.question.ques.length) {
         return;
       }
-      this.currentIndex += 1;
-    }
+      this.setCurrentIndex(this.currentIndex + 1);
+    },
+    ...mapMutations("lianxi", [
+      "setQuestion",
+      "setCurrentIndex",
+      "setCorrectAnswer"
+    ])
   },
   data() {
-    return {
-      currentIndex: 0,
-      includeFiles: true,
-      enabled: false,
-      question: {},
-      correctAnswer:[]
-    };
+    return {};
+  },
+  computed: {
+    standedAnswer() {
+      let an = this.correctAnswer.filter(correctAn => {
+        if (correctAn.question_id == this.question.ques[this.currentIndex].id) {
+          return true;
+        }
+      });
+      return an.length ? an[0].text : "";
+    },
+    ...mapState("lianxi", {
+      currentIndex: state => state.currentIndex,
+      question: state => state.question,
+      correctAnswer: state => state.correctAnswer
+    }),
+    ...mapGetters("lianxi", ["currentCorrectAnswer", "currentQuestionIsRight",'currentAnswer'])
   },
   mounted() {
     let data1 = {
@@ -156,20 +171,9 @@ export default {
       success: true
     };
     let question = JSON.parse(data1.data);
-    this.question = question;
-    this.correctAnswer = data1.correctAnswer;
+    this.setQuestion(question);
+    this.setCorrectAnswer(data1.correctAnswer);
     console.log(question);
-  },
-  computed: {
-    standedAnswer() {
-      console.log(this.correctAnswer instanceof Array);
-      let an = this.correctAnswer.filter(correctAn => {
-        if (correctAn.question_id == this.question.ques[this.currentIndex].id) {
-          return true;
-        }
-      });
-      return an[0].text;
-    }
   }
 };
 </script>
@@ -194,7 +198,7 @@ export default {
 .submit-paper-btn {
   margin-top: 0;
   margin-bottom: 0;
-  height:30px;
+  height: 30px;
   min-width: 50px;
   color: #ffffff !important;
 }

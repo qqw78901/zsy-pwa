@@ -16,6 +16,8 @@
 import axios from "axios";
 import api from "../../core/api";
 import qs from "qs";
+
+import { mapState, mapGetters, mapMutations } from 'vuex';
 export default {
   name: "single",
   props: {
@@ -40,9 +42,29 @@ export default {
   },
   data() {
     return {
-      answer: "",
       answerdataId: ""
     };
+  },
+  computed:{
+    answer:{
+      get(){
+        return this.currentAnswer;
+      },
+      set(text){
+        console.log(text);
+        this.setUserAnswer({
+          questionId:this.question.id,
+          text
+        })
+      }
+
+    },
+    ...mapGetters('lianxi',[
+      'currentAnswer'
+    ]),
+    ...mapState('lianxi',{
+
+    })
   },
   watch: {
     // answer(val, oldVal) {
@@ -72,7 +94,10 @@ export default {
         }
       });
       this.$emit("changeFn", this.order, answertext);
-    }
+    },
+    ...mapMutations('lianxi',[
+      'setUserAnswer'
+    ])
   },
   mounted() {
   }
