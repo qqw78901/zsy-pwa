@@ -10,10 +10,15 @@
       <Single :question="item" :key="index" :order="index+1" v-if="index==currentIndex&&item.type==1"></Single>
       <Multi :question="item" :key="index" :order="index+1" v-if="index==currentIndex&&item.type==2"></Multi>
     </template>
-    <v-card class="mx-2" light color="teal" v-if="!currentQuestionIsRight&&currentAnswer">
-      <v-card-text class="correct-helper">正确答案：
+
+    <v-card class="mx-2" light color="red" v-if="!currentQuestionIsRight&&currentAnswer">
+      <v-card-text class="correct-helper">答错了，正确答案：
         <b>{{currentCorrectAnswer}}
         </b>
+      </v-card-text>
+    </v-card>
+     <v-card class="mx-2" light color="teal" v-else-if="currentQuestionIsRight&&currentAnswer">
+      <v-card-text class="correct-helper">答对了
       </v-card-text>
     </v-card>
     <v-layout>
@@ -59,21 +64,15 @@ export default {
   data() {
     return {};
   },
+  watch:{
+  },
   computed: {
-    standedAnswer() {
-      let an = this.correctAnswer.filter(correctAn => {
-        if (correctAn.question_id == this.question.ques[this.currentIndex].id) {
-          return true;
-        }
-      });
-      return an.length ? an[0].text : "";
-    },
     ...mapState("lianxi", {
       currentIndex: state => state.currentIndex,
-      question: state => state.question,
-      correctAnswer: state => state.correctAnswer
+      question: state => state.question
+      // currentAnswer: state => state.currentAnswer
     }),
-    ...mapGetters("lianxi", ["currentCorrectAnswer", "currentQuestionIsRight",'currentAnswer'])
+    ...mapGetters("lianxi", ["currentCorrectAnswer", "currentQuestionIsRight","currentAnswer"])
   },
   mounted() {
     let data1 = {
@@ -173,7 +172,6 @@ export default {
     let question = JSON.parse(data1.data);
     this.setQuestion(question);
     this.setCorrectAnswer(data1.correctAnswer);
-    console.log(question);
   }
 };
 </script>

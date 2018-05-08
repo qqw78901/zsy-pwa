@@ -9,24 +9,23 @@ export const state = () => {
         currentIndex: 0,
         question: {},
         //正确答案
-        correctAnswer: [],
-        userAnswer: {//考生填的答案
-            'id': 'value'
-        }
+        correctAnswer:{},
+        userAnswer: [],//考生填的答案
+        // currentAnswer: ''
     };
 };
 export const getters = {
     //当前用户答案
     currentAnswer(state, getters, rootState, rootGetters) {
-        let { currentIndex, userAnswer, question } = state;
         let { currentQuestionId } = getters;
-        return userAnswer[currentQuestionId];
-        // let an = state.correctAnswer.filter(correctAn => {
-        //     if (correctAn.question_id == currentQuestionId) {
-        //       return true;
-        //     }
-        //   });
-        // return an.length?an[0].text:'';
+        let { userAnswer } = state;
+        let result=''
+        userAnswer.forEach(element => {
+            if (element.questionId === currentQuestionId) {
+                result= element.text;
+            }
+        });
+        return result;
     },
     /**
      * 当前选题的正确答案
@@ -35,11 +34,10 @@ export const getters = {
      * @param {*} rootState 
      * @param {*} rootGetters 
      */
-    currentCorrectAnswer(state, getters, rootState, rootGetters){
+    currentCorrectAnswer(state, getters, rootState, rootGetters) {
         const { currentQuestionId } = getters;
-         let an = state.correctAnswer.filter(correctAn => 
-            correctAn.question_id == currentQuestionId);
-        return an.length?an[0].text:'';
+        const { correctAnswer } = state;
+        return correctAnswer[`q_${currentQuestionId}`]||'';
     },
     currentQuestionId(state) {
         const { currentIndex, question } = state;
@@ -49,13 +47,11 @@ export const getters = {
             return '';
         }
     },
-    currentQuestionIsRight(state, getters, rootState, rootGetters){
-        const {currentAnswer,currentCorrectAnswer} = getters;
+    currentQuestionIsRight(state, getters, rootState, rootGetters) {
+        const { currentAnswer, currentCorrectAnswer } = getters;
         //暂时单选
-        return currentAnswer==currentCorrectAnswer;
-        
+        return currentAnswer == currentCorrectAnswer;
     }
-
 }
 
 export const mutations = {
@@ -71,9 +67,17 @@ export const mutations = {
      * @param {*} param1 
      */
     setUserAnswer(state, { questionId, text }) {
-        console.log(state.userAnswer)
-        console.log(state.userAnswer[questionId])
-        state.userAnswer[questionId] = text;
+        // state.currentAnswer = text;
+        let flag = false;
+        state.userAnswer.forEach((item)=>{
+            if(item.questionId==questionId){
+                item.text=text;
+                flag=true;
+                return;
+            }
+        });
+        if(!flag)
+        state.userAnswer.push({ questionId, text });
     },
     /**
      * 初始化时设置正确答案
@@ -81,7 +85,11 @@ export const mutations = {
      * @param {*} correctAnswer 
      */
     setCorrectAnswer(state, correctAnswer) {
-        state.correctAnswer = correctAnswer;
+        let obj = {}
+        correctAnswer.forEach(item=>{
+            obj[`q_${item.question_id}`] = item.text;
+        })
+        state.correctAnswer = obj;
     },
 };
 export const action = {

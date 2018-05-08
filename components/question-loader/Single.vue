@@ -1,5 +1,5 @@
 <template>
-  <section class="my-2 px-2">
+  <section class="my-2 px-2" >
     <v-card class="card">
       <v-card-title class="subheading card-title light-blue">
        [单选题] {{this.order}}.{{question.text}}
@@ -21,11 +21,6 @@ import { mapState, mapGetters, mapMutations } from 'vuex';
 export default {
   name: "single",
   props: {
-    userAnswer: {
-      type: String,
-      default: null,
-      required: false
-    },
     order: {
       type: Number,
       default: 1,
@@ -59,19 +54,11 @@ export default {
       }
 
     },
-    ...mapGetters('lianxi',[
-      'currentAnswer'
-    ]),
     ...mapState('lianxi',{
-
-    })
-  },
-  watch: {
-    // answer(val, oldVal) {
-    //   if (!this.preview) {
-    //     this.handleAnswer(val);
-    //   }
-    // }
+    // currentAnswer:state=>state.currentAnswer
+    }),
+    ...mapGetters('lianxi',
+    ['currentAnswer'])
   },
   methods: {
     /*submit*/
