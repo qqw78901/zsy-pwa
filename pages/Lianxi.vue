@@ -3,7 +3,7 @@
     <div class="pt-3 pb-2 mx-2 text-xs-left question-header">
       <span class="text-xs-right blue--text" v-if="question.ques">第{{currentIndex+1}}/{{question.ques.length}}题</span>
       <span>{{question.plan_name}} </span>
-      <v-btn small color="teal darken-1" class="submit-paper-btn">交卷</v-btn>
+      <v-btn small color="teal darken-1" class="submit-paper-btn" @click="submitPaper">交卷</v-btn>
     </div>
     <template v-for="(item,index) in question.ques">
       <!-- question main -->
@@ -55,6 +55,11 @@ export default {
       }
       this.setCurrentIndex(this.currentIndex + 1);
     },
+    submitPaper(){
+      //这里需要做一个上传的操作
+      this.$router.replace('result')
+
+    },
     ...mapMutations("lianxi", [
       "setQuestion",
       "setCurrentIndex",
@@ -70,7 +75,6 @@ export default {
     ...mapState("lianxi", {
       currentIndex: state => state.currentIndex,
       question: state => state.question
-      // currentAnswer: state => state.currentAnswer
     }),
     ...mapGetters("lianxi", ["currentCorrectAnswer", "currentQuestionIsRight","currentAnswer"])
   },
@@ -170,6 +174,7 @@ export default {
       success: true
     };
     let question = JSON.parse(data1.data);
+    console.log(question);
     this.setQuestion(question);
     this.setCorrectAnswer(data1.correctAnswer);
   }

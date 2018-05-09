@@ -39,6 +39,11 @@ export const getters = {
         const { correctAnswer } = state;
         return correctAnswer[`q_${currentQuestionId}`]||'';
     },
+    /**
+     * 当前问题的id
+     * 根据currentIndex换算
+     * @param {*} state 
+     */
     currentQuestionId(state) {
         const { currentIndex, question } = state;
         try {
@@ -76,8 +81,13 @@ export const mutations = {
                 return;
             }
         });
-        if(!flag)
-        state.userAnswer.push({ questionId, text });
+        if(!flag){
+        const {correctAnswer,currentIndex} = state;
+        let currentCorrectAnswer = correctAnswer[`q_${questionId}`];
+            let mark = currentCorrectAnswer===text?100:0;
+            let order = currentIndex+1;
+            state.userAnswer.push({ questionId, text,mark,order});
+        }
     },
     /**
      * 初始化时设置正确答案
