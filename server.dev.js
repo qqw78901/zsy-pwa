@@ -24,7 +24,7 @@ if (process.argv.length >= 3 && process.argv[2] !== 'dev') {
 var proxyTable = {
     // proxy table example
     '/api': {
-        target: 'http://localhost:7080',
+        target: 'http://medu2011.com:8083/',
         changeOrigin: true,
         onProxyRes: function (proxyRes, req, res) {
             let resCookie = proxyRes.headers['set-cookie'];
@@ -32,7 +32,7 @@ var proxyTable = {
               let resultArr = resCookie[0].split(";");
               let resultStr = '';
               for (let i in resultArr) {
-                if (resultArr[i].indexOf('Path=') >= 0) {
+                if (resultArr[i].toLowerCase().indexOf('path=') >= 0) {
                   resultStr += 'Path=/;';
                 } else {
                   resultStr += resultArr[i] + ';'

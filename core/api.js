@@ -5,6 +5,7 @@ const host="api"
 export default {
   loginYzm: host+'/servlet/CreateImage',
   loginUrl: host+'/admin/login.do',
+  userloginUrl: host+'/user/login.do',
   logoutUrl: host+'/admin/logout.do',
   checkLogin: host + '/admin/checklogin.do',
 
