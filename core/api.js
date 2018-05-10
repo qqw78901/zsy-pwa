@@ -1,7 +1,7 @@
 /**
  * Created by King-z on 2017/10/1 0001.
  */
-const host="api"
+const host="api";
 export default {
   loginYzm: host+'/servlet/CreateImage',
   loginUrl: host+'/admin/login.do',

@@ -1,6 +1,6 @@
 {
     "name": "zsy-pwa",
-    "version": "0.0.1",
+    "version": "0.2.1",
     "description": "这是一个 Lavas PWA 项目",
     "author": "qqw78901 <qqw78901@126.com>",
     "private": true,
@@ -24,13 +24,15 @@
         "cross-env": "^5.1.1",
         "es6-promise": "^4.1.1",
         "iscroll": "5.1.0",
-        "lavas-core-vue": "^1.1.8",
+        "lavas": "^2.2.8",
+        "lavas-core-vue": "^1.1.12",
         "normalize.css": "^7.0.0",
         "qs": "^6.5.1",
         "stoppable": "^1.0.4",
-        "vuetify": "^1.0.17"
+        "vuetify": "^0.17.5"
     },
     "devDependencies": {
+        "babel-preset-env": "^1.6.1",
         "express": "^4.16.2",
         "http-proxy-middleware": "^0.17.4"
     },

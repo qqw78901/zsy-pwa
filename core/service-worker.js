@@ -7,10 +7,10 @@
 /* globals WorkboxSW */
 
 const workboxSW = new WorkboxSW({
-    cacheId: 'lavas-cache',
+    cacheId: 'zsypwa-cache',
     ignoreUrlParametersMatching: [/^utm_/],
-    skipWaiting: true,
-    clientsClaim: true
+    skipWaiting: false,
+    clientsClaim: false
 });
 
 // Define precache injection point.

@@ -86,7 +86,9 @@ export default {
               loginName,password,yzm,userType:2
           })).then(resp=>{
               console.log(resp);
-          })
+
+          });
+          this.$router.replace("home");
       }
   },
   async asyncData({ store, route }) {
