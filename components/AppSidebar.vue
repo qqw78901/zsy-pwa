@@ -6,7 +6,7 @@
         <div
             class="app-sidebar-content">
             <!-- 头部 -->
-            <div v-if="title" class="app-sidebar-title" @click.stop="closeAndGo('/')">
+            <div v-if="title" class="app-sidebar-title" @click.stop="closeAndGo('Home')">
                 <span class="app-sidebar-title-left-icon">
                     <img v-if="title.imageLeft" :src="title.imageLeft" :alt="title.altLeft"></img>
                     <v-icon color="white" v-else-if="title.iconLeft">{{ title.iconLeft }}</v-icon>

@@ -70,7 +70,7 @@ export default {
   display: block;
 }
 .skeleton-main > div {
-  height: 232px;
+  height:306px;
   background: white;
   width: 100%;
 }

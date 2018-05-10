@@ -35,7 +35,7 @@ export const state = () => {
                     {
                         text: '练习',
                         icon: 'book',
-                        route: '/lianxi'
+                        route: '/choose'
                     },
                     {
                         text: '成绩分析',

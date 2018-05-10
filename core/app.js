@@ -2,10 +2,11 @@
  * @file entry
  * @author qqw78901(qqw78901@126.com)
  */
-
+// import 'babel-polyfill'
 import Vue from 'vue';
 import Meta from 'vue-meta';
 import axios from 'axios';
+import api from './api';
 
 import {createRouter} from '@/.lavas/router';
 import {createStore} from '@/.lavas/store';
@@ -16,6 +17,7 @@ Vue.use(Meta);
 
 Vue.use(Vuetify);
 Vue.prototype.$http = axios;
+Vue.prototype.$api = api;
 
 Vue.config.productionTip = false;
 

@@ -11,7 +11,7 @@
                             </v-card-title>
                         </v-card>
                     </v-flex>
-                    <v-flex xs12 @click="goTo('lianxi')">
+                    <v-flex xs12 @click="goTo('choose')">
                         <v-card color="blue-grey darken-2" class="white--text">
                             <v-card-title primary-title>
                                 <div class="headline">不一样的练习平台</div>

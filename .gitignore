@@ -6,3 +6,5 @@ yarn-debug.log*
 yarn-error.log*
 .lavas/
 .nyc_output
+zsypwa.jks
+node-server.js
