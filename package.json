@@ -26,6 +26,7 @@
         "iscroll": "5.1.0",
         "lavas": "^2.2.8",
         "lavas-core-vue": "^1.1.12",
+        "moment": "^2.22.1",
         "normalize.css": "^7.0.0",
         "qs": "^6.5.1",
         "stoppable": "^1.0.4",

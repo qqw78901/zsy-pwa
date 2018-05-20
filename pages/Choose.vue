@@ -15,7 +15,7 @@
 
             <v-card-actions>
                 <v-flex class="align-center pb-3">
-                    <v-btn color="teal white--text" round @click="$router.push('lianxi')">
+                    <v-btn color="teal white--text" round @click="goToLianXi">
                         <v-icon>edit</v-icon>开始模拟考</v-btn>
                 </v-flex>
             </v-card-actions>
@@ -24,6 +24,8 @@
     </section>
 </template>
 <script>
+import { mapState } from 'vuex';
+
 /**
  * 选择练习
  */
@@ -87,7 +89,8 @@ export default {
         }
       ];
       return dataModel;
-    }
+    },
+    ...mapState('login',['userInfo'])
   },
   async created() {
     console.log("active");
@@ -102,6 +105,29 @@ export default {
       }
     });
     this.examPaper = find.data.rows[0];
+  },
+  methods:{
+    goToLianXi(){
+      console.log(this.$store);
+      // this.$http.get(this.$api.addExerciseLog,{
+      //   params:{
+      //     planId:this.examPaper.id,
+      //     userId:this.userInfo.id
+      //   }
+      // }).then(()=>{
+        
+      // })
+      this.$store.dispatch('lianxi/addExercise',{
+        planId:this.examPaper.id,
+          userId:this.userInfo.id
+      }).then(()=>{});
+      this.$router.push({
+        name:'lianxi',
+        query:{
+          planId:this.examPaper.id
+        }
+      })
+    }
   }
 };
 </script>

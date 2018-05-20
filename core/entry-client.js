@@ -122,6 +122,10 @@ function handleMiddlewares() {
         if (!isInitialRoute && to.path === from.path) {
             return next();
         }
+        try{
+            store.dispatch('login/updateUserInfo');
+        }catch(e){
+        }
         isInitialRoute = false;
 
         let matchedComponents = router.getMatchedComponents(to);

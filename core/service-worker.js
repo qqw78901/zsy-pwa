@@ -8,10 +8,16 @@
 
 const workboxSW = new WorkboxSW({
     cacheId: 'zsypwa-cache',
-    ignoreUrlParametersMatching: [/^utm_/],
+    ignoreUrlParametersMatching: [/^utm_/,/^iw/],
     skipWaiting: false,
     clientsClaim: false
 });
+
+workboxSW.router.registerRoute(
+    /\^iw/,
+    workboxSW.strategies.networkFirst()
+);
+  
 
 // Define precache injection point.
 workboxSW.precache([]);

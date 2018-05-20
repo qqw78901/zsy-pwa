@@ -1,14 +1,14 @@
 <template>
-  <section class="my-2 px-2" >
+  <section class="my-2 px-2">
     <v-card class="card">
       <v-card-title class="subheading card-title light-blue">
-       [单选题] {{this.order}}.{{question.text}}
+        [单选题] {{this.order}}.{{question.text}}
       </v-card-title>
       <v-divider></v-divider>
       <v-radio-group v-model="answer" column class="px-4">
         <v-radio :label="`${item.orderby}.${item.text}`" :value="item.orderby" v-for="(item,index) in question.anss" :key="index" class="my-2">
         </v-radio>
-      </v-radio-group>  
+      </v-radio-group>
     </v-card>
   </section>
 </template>
@@ -17,7 +17,7 @@ import axios from "axios";
 import api from "../../core/api";
 import qs from "qs";
 
-import { mapState, mapGetters, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapMutations } from "vuex";
 export default {
   name: "single",
   props: {
@@ -40,25 +40,23 @@ export default {
       answerdataId: ""
     };
   },
-  computed:{
-    answer:{
-      get(){
+  computed: {
+    answer: {
+      get() {
         return this.currentAnswer;
       },
-      set(text){
+      set(text) {
         console.log(text);
-        this.setUserAnswer({
-          questionId:this.question.id,
+        this.$store.dispatch("lianxi/addQuestionLog",{
+          questionId: this.question.id,
           text
-        })
+        }).then(() => {});
       }
-
     },
-    ...mapState('lianxi',{
-    // currentAnswer:state=>state.currentAnswer
+    ...mapState("lianxi", {
+      // currentAnswer:state=>state.currentAnswer
     }),
-    ...mapGetters('lianxi',
-    ['currentAnswer'])
+    ...mapGetters("lianxi", ["currentAnswer"])
   },
   methods: {
     /*submit*/
@@ -82,12 +80,9 @@ export default {
       });
       this.$emit("changeFn", this.order, answertext);
     },
-    ...mapMutations('lianxi',[
-      'setUserAnswer'
-    ])
+    ...mapMutations("lianxi", ["setUserAnswer"])
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 <style scoped>
@@ -101,5 +96,4 @@ export default {
 .card p {
   margin-top: 20px;
 }
-
 </style>

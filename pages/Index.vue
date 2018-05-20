@@ -8,7 +8,7 @@
                 <v-flex xs12 sm8 md4>
                     <v-card class="elevation-6">
                         <v-toolbar dark color="primary">
-                            <v-toolbar-title>登录</v-toolbar-title>
+                            <v-toolbar-title>云学习分析平台</v-toolbar-title>
                             <v-spacer></v-spacer>
                         </v-toolbar>
                         <v-card-text>
@@ -85,10 +85,13 @@ export default {
           this.$http.post(api.userloginUrl,qs.stringify({
               loginName,password,yzm,userType:2
           })).then(resp=>{
-              console.log(resp);
-
+              if(resp.data.info==="success"){
+              this.$store.dispatch('login/updateUserInfo');
+              this.$router.replace("home");
+              }else{
+                  alert(resp.data.message);
+              }
           });
-          this.$router.replace("home");
       }
   },
   async asyncData({ store, route }) {
